@@ -36,4 +36,9 @@ public class UserServiceImpl implements UserService {
         userInDb.setAuthToken(String.valueOf(Base64.encodeBase64((new Date().getTime() + userInDb.getEmail() + userInDb.getPassword() + userInDb.getFirstName()).getBytes())));
         return userDao.updateUser(userInDb);
     }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
 }

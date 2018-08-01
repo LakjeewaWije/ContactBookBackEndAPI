@@ -9,4 +9,5 @@ import models.User;
 public interface UserService {
     User addUser(User userToAdd);
     User login(LoginCredentials logincredentials);
+    User findUserByEmail(String email);
 }

@@ -2,6 +2,7 @@ package dao.Impl;
 
 import com.avaje.ebean.Model;
 import dao.UserDao;
+import models.Contact;
 import models.User;
 
 /**
@@ -17,7 +18,8 @@ public class UserDoaImpl implements UserDao{
 
     @Override
     public User findUserByEmail(String email) {
-        return find.where().eq("email",email).findUnique();
+        User user = find.where().eq("email",email).findUnique();
+        return user;
     }
 
     @Override
@@ -25,4 +27,11 @@ public class UserDoaImpl implements UserDao{
         toUpdateUser.update();
         return toUpdateUser;
     }
+
+    @Override
+    public User findUserByToken(String token) {
+        return find.where().eq("authToken",token).findUnique();
+    }
+
+
 }

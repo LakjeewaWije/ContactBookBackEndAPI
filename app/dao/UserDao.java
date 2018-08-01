@@ -11,4 +11,6 @@ public interface UserDao {
     User findUserByEmail(String email);
 
     User updateUser(User toUpdateUser);
+
+    User findUserByToken(String token);
 }

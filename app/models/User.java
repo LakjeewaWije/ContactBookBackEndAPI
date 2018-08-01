@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class User extends Model {
     private String firstName;
     @NotNull
     private String lastName;
-    @NotNull
+
     private String email;
     @NotNull
     private String password;
@@ -29,6 +30,7 @@ public class User extends Model {
 
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Contact> contactList;
 
     public Long getUserId() {
@@ -82,4 +84,5 @@ public class User extends Model {
     public void setContactList(List<Contact> contactList) {
         this.contactList = contactList;
     }
+
 }
