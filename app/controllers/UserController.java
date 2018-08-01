@@ -3,6 +3,8 @@ package controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.LoginCredentials;
+import dto.LoginResponse;
 import models.User;
 import play.Logger;
 import play.mvc.BodyParser;
@@ -47,6 +49,33 @@ public class UserController extends Controller{
         } catch (JsonProcessingException e) {
             Logger.error(e.getMessage());
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Not JSon", null)));
+        }
+    }
+
+
+    /**
+     * Getting the Json which comes from the front end and assiging it to a LoginCredential object and passing it to the Service
+     * @return Doing all the validations and returning a json with the specific status code
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result login(){
+        JsonNode jsonNode = request().body().asJson();
+
+        try {
+            LoginCredentials loginCridentials = objectMapper.treeToValue(jsonNode, LoginCredentials.class);
+
+            User loggedInUser = userService.login(loginCridentials);
+
+            LoginResponse logingResponse = new LoginResponse(loggedInUser,loggedInUser.getAuthToken());
+
+
+            if (loggedInUser == null){
+                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("No user for the provided email/password", null)));
+            }
+            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("User loggedIn", logingResponse)));
+        } catch (JsonProcessingException e) {
+            Logger.error(e.getMessage());
+            return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Can not get data", null)));
         }
     }
 }

@@ -24,6 +24,10 @@ public class User extends Model {
     @NotNull
     private String password;
 
+    private String authToken;
+
+
+
     @OneToMany(mappedBy = "user")
     private List<Contact> contactList;
 
@@ -66,6 +70,10 @@ public class User extends Model {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getAuthToken() {return authToken;}
+
+    public void setAuthToken(String authToken) {this.authToken = authToken;}
 
     public List<Contact> getContactList() {
         return contactList;

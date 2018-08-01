@@ -7,4 +7,8 @@ import models.User;
  */
 public interface UserDao {
     User addUser(User toAddUser);
+
+    User findUserByEmail(String email);
+
+    User updateUser(User toUpdateUser);
 }
