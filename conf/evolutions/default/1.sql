@@ -17,6 +17,7 @@ create table user (
   last_name                     varchar(255) not null,
   email                         varchar(255) not null,
   password                      varchar(255) not null,
+  auth_token                    varchar(255),
   constraint pk_user primary key (user_id)
 );
 
