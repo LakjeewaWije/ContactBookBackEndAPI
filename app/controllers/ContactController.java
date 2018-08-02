@@ -60,4 +60,32 @@ public class ContactController extends Controller{
         List<Contact> contactList = contactService.viewContacts(loggedInUser);
         return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("All contacts", contactList)));
     }
+
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public Result updateContact(){
+        JsonNode jsonNode = request().body().asJson();
+
+        Contact contactToAdd = null;
+        try{
+            contactToAdd = objectMapper.treeToValue(jsonNode, Contact.class);
+            List<Contact> contactList = contactService.updateContact(contactToAdd);
+            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("All contacts", contactList)));
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public Result deleteContact(Long id){
+        try{
+            List<Contact> newContactList = contactService.deleteContact(id);
+            if (newContactList != null) {
+                return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("All contacts", newContactList)));
+            }else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
 }

@@ -2,6 +2,7 @@ package dao;
 
 import models.Contact;
 import models.User;
+import play.api.libs.iteratee.Cont;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ import java.util.List;
 public interface ContactDao {
     Contact addContact(Contact contactToAdd);
     User findUserByToken(String email);
-    User updateUser(User toUpdateUser);
+    Contact findContactById(Long id);
+    List<Contact> updateContact(Contact toUpdateUser);
+    List<Contact> deleteContact(Contact toDeleteContact);
     List<Contact> findContactDetailById(long id);
 }

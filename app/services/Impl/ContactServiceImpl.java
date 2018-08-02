@@ -19,6 +19,7 @@ import static play.mvc.Http.Context.Implicit.ctx;
  * Created by lakjeewa on 8/1/18.
  */
 public class ContactServiceImpl implements ContactService {
+    Contact n = new Contact();
     @Inject
     @Named("contactDao")
     private ContactDao contactDao;
@@ -44,5 +45,18 @@ public class ContactServiceImpl implements ContactService {
         }else {
             return null;
         }
+    }
+
+    @Override
+    public List<Contact> updateContact(Contact contact) {
+        List<Contact> contactList = contactDao.updateContact(contact);
+        return  contactList;
+    }
+
+    @Override
+    public List<Contact> deleteContact(Long id) {
+        Contact contact = contactDao.findContactById(id);
+        List<Contact> contactList = contactDao.deleteContact(contact);
+        return  contactList;
     }
 }

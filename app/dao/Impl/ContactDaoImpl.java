@@ -5,6 +5,7 @@ import com.avaje.ebean.Model;
 import dao.ContactDao;
 import models.Contact;
 import models.User;
+import play.api.libs.iteratee.Cont;
 
 import java.util.List;
 
@@ -27,10 +28,25 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public User updateUser(User toUpdateUser) {
-        toUpdateUser.update();
-        return toUpdateUser;
+    public Contact findContactById(Long id) {
+        Contact contact =  findd.where().eq("contact_Id",id).findUnique();
+        return contact;
     }
+
+    @Override
+    public List<Contact> updateContact(Contact toUpdateContact) {
+        toUpdateContact.update();
+        List<Contact> listCon = findContactDetailById(toUpdateContact.getUser().getUserId());
+        return listCon;
+    }
+
+    @Override
+    public List<Contact> deleteContact(Contact toDeleteContact) {
+        toDeleteContact.delete();
+        List<Contact> listCon = findContactDetailById(toDeleteContact.getUser().getUserId());
+        return listCon;
+    }
+
 
     @Override
     public List<Contact> findContactDetailById(long id) {

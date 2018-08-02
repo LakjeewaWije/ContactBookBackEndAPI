@@ -38,6 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User logout(User userToLogout) {
+        return userDao.logoutUser(userToLogout);
+    }
+
+    @Override
     public User findUserByEmail(String email) {
         return userDao.findUserByEmail(email);
     }

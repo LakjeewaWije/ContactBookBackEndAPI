@@ -1,5 +1,6 @@
 package controllers;
 
+import authentication.UserAuthentication;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import play.Logger;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.With;
 import services.UserService;
 import utils.JsonServiceUtil;
 import utils.ResponseWrapper;
@@ -90,6 +92,21 @@ public class UserController extends Controller{
         } catch (JsonProcessingException e) {
             Logger.error(e.getMessage());
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Can not get data", null)));
+        }
+    }
+    /**
+     * Getting the Json which comes from the front end and assiging it to a LoginCredential object and passing it to the Service
+     * @return Doing all the validations and returning a json with the specific status code
+     */
+    @With(UserAuthentication.class)
+    public Result logoutUser(){
+        User loggedInUser = (User) ctx().args.get("user");
+        loggedInUser.setAuthToken("");
+        if (loggedInUser.getAuthToken().equals("")) {
+           User logoutedUser = userService.logout(loggedInUser);
+            return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Successfully Logged Out", logoutedUser)));
+        }else {
+            return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
         }
     }
 }

@@ -12,4 +12,6 @@ import java.util.List;
 public interface ContactService {
     List<Contact> addContact(Contact contactToAdd, User user);
     List<Contact> viewContacts(User user);
+    List<Contact> updateContact(Contact contact);
+    List<Contact> deleteContact(Long contactId);
 }

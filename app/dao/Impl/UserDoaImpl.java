@@ -17,6 +17,12 @@ public class UserDoaImpl implements UserDao{
     }
 
     @Override
+    public User logoutUser(User toLogoutUser) {
+        toLogoutUser.update();
+        return toLogoutUser;
+    }
+
+    @Override
     public User findUserByEmail(String email) {
         User user = find.where().eq("email",email).findUnique();
         return user;
