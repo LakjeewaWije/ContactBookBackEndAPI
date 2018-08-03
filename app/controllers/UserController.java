@@ -104,7 +104,7 @@ public class UserController extends Controller{
         loggedInUser.setAuthToken("");
         if (loggedInUser.getAuthToken().equals("")) {
            User logoutedUser = userService.logout(loggedInUser);
-            return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Successfully Logged Out", logoutedUser)));
+            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Successfully Logged Out", logoutedUser)));
         }else {
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
         }
