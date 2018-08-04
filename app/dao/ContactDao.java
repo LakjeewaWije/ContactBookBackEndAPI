@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface ContactDao {
     Contact addContact(Contact contactToAdd);
-    User findUserByToken(String email);
     Contact findContactById(Long id);
+    Contact findContactByName(String name);
     List<Contact> updateContact(Contact toUpdateUser);
     List<Contact> deleteContact(Contact toDeleteContact);
     List<Contact> findContactDetailById(long id);

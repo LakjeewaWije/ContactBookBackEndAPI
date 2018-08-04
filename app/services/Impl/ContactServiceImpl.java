@@ -26,14 +26,19 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public List<Contact> addContact(Contact contactToAdd, User user) {
 
-        Contact contact = contactToAdd;
-        contact.setUser(user);
-        if (user.getUserId() != null){
-            contactDao.addContact(contact);
-            List<Contact> contactList = contactDao.findContactDetailById(user.getUserId());
-            return contactList;
+        Contact contact = contactDao.findContactByName(contactToAdd.getContactName());
+        if (contact == null) {
+            contact = contactToAdd;
+            contact.setUser(user);
+            if (user.getUserId() != null) {
+                contactDao.addContact(contact);
+                List<Contact> contactList = contactDao.findContactDetailById(user.getUserId());
+                return contactList;
+            } else {
+                return null;
+            }
         }else {
-            return null;
+            return  null;
         }
     }
 

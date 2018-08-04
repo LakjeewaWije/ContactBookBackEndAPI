@@ -47,8 +47,11 @@ public class ContactController extends Controller{
             contactToAdd = objectMapper.treeToValue(jsonNode, Contact.class);
             User loggedInUser = (User) ctx().args.get("user");
             List<Contact> contactList = contactService.addContact(contactToAdd,loggedInUser );
-
-            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Contact added", contactList)));
+            if (contactList == null){
+                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Not JSon", null)));
+            }else {
+                return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Contact added", contactList)));
+            }
         } catch (JsonProcessingException e) {
             Logger.error(e.getMessage());
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Not JSon", null)));

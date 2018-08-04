@@ -87,7 +87,7 @@ public class UserController extends Controller{
                     return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Couldn't register", null)));
                 }
             }else {
-                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
+                return notFound(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
             }
         } catch (JsonProcessingException e) {
             Logger.error(e.getMessage());

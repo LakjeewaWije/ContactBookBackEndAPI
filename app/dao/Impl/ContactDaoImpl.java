@@ -23,14 +23,14 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public User findUserByToken(String authToken) {
-        return find.where().eq("authToken",authToken).findUnique();
-    }
-
-    @Override
     public Contact findContactById(Long id) {
         Contact contact =  findd.where().eq("contact_Id",id).findUnique();
         return contact;
+    }
+
+    @Override
+    public Contact findContactByName(String name) {
+        return findd.where().eq("contact_name",name).findUnique();
     }
 
     @Override
