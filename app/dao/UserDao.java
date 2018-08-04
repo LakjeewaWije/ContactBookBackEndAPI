@@ -8,7 +8,11 @@ import models.User;
 public interface UserDao {
     User addUser(User toAddUser);
 
+    User logoutUser(User toLogoutUser);
+
     User findUserByEmail(String email);
 
     User updateUser(User toUpdateUser);
+
+    User findUserByToken(String token);
 }
