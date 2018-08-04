@@ -5,7 +5,13 @@
 # Default path will just redirect to the computer list
 GET     /                           controllers.HomeController.index()
 
-POST    /user           controllers.UserController.addUser()
+POST    /user/add           controllers.UserController.addUser()
+POST    /user/login          controllers.UserController.login()
+PUT     /user/logout        controllers.UserController.logoutUser()
+POST    /contact/add     controllers.ContactController.addContact()
+GET    /contact/view   controllers.ContactController.getContacts()
+PUT     /contact/update controllers.ContactController.updateContact()
+DELETE  /contact/delete/:id  controllers.ContactController.deleteContact(id: Long)
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
