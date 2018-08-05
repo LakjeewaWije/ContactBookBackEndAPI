@@ -48,7 +48,7 @@ public class ContactController extends Controller{
             User loggedInUser = (User) ctx().args.get("user");
             List<Contact> contactList = contactService.addContact(contactToAdd,loggedInUser );
             if (contactList == null){
-                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Not JSon", null)));
+                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Contact name already exists", null)));
             }else {
                 return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Contact added", contactList)));
             }
@@ -73,7 +73,12 @@ public class ContactController extends Controller{
         try{
             contactToAdd = objectMapper.treeToValue(jsonNode, Contact.class);
             List<Contact> contactList = contactService.updateContact(contactToAdd);
-            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("All contacts", contactList)));
+            if (contactList != null){
+                return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("All contacts", contactList)));
+            }else {
+                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Contact Name Exists", null)));
+            }
+
         }catch (Exception e){
             return null;
         }
