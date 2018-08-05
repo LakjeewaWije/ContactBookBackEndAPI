@@ -17,6 +17,8 @@ import utils.JsonServiceUtil;
 import utils.ResponseWrapper;
 
 import javax.inject.Inject;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by lakjeewa on 8/1/18.
@@ -44,14 +46,25 @@ public class UserController extends Controller{
         try {
             userToAdd = objectMapper.treeToValue(jsonNode, User.class);
             String email = userToAdd.getEmail();
-            User user = userService.findUserByEmail(email);
+            String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(email);
+//            if (userToAdd.getFirstName() != null) {
+                if (matcher.matches()) {
+                    User user = userService.findUserByEmail(email);
 
-            if (user == null){
-                User addedUser = userService.addUser(userToAdd);
-                return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("User added", addedUser)));
-            }else {
-                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Email Exists", null)));
-            }
+                    if (user == null) {
+                        User addedUser = userService.addUser(userToAdd);
+                        return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("User added", addedUser)));
+                    } else {
+                        return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Email Exists", null)));
+                    }
+                } else {
+                    return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid Email", null)));
+                }
+//            }else {
+//                return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Fill all the fields", null)));
+//            }
         } catch (JsonProcessingException e) {
             Logger.error(e.getMessage());
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Not JSon", null)));
