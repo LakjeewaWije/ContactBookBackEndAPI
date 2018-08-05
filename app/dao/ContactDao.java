@@ -12,7 +12,7 @@ import java.util.List;
 public interface ContactDao {
     Contact addContact(Contact contactToAdd);
     Contact findContactById(Long id);
-    Contact findContactByName(String name);
+    Contact findContactByNameandUserID(String name,Long userId);
     List<Contact> updateContact(Contact toUpdateUser);
     List<Contact> deleteContact(Contact toDeleteContact);
     List<Contact> findContactDetailById(long id);

@@ -26,7 +26,7 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public List<Contact> addContact(Contact contactToAdd, User user) {
 
-        Contact contact = contactDao.findContactByName(contactToAdd.getContactName());
+        Contact contact = contactDao.findContactByNameandUserID(contactToAdd.getContactName(),user.getUserId());
         if (contact == null) {
             contact = contactToAdd;
             contact.setUser(user);
@@ -54,8 +54,14 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public List<Contact> updateContact(Contact contact) {
-        List<Contact> contactList = contactDao.updateContact(contact);
-        return  contactList;
+        Contact contactInDb = contactDao.findContactByNameandUserID(contact.getContactName(),contact.getUser().getUserId());
+        if(contactInDb ==null){
+            List<Contact> contactList = contactDao.updateContact(contact);
+            return  contactList;
+        }else {
+            return null;
+        }
+
     }
 
     @Override

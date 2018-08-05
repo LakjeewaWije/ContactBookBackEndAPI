@@ -29,8 +29,8 @@ public class ContactDaoImpl implements ContactDao {
     }
 
     @Override
-    public Contact findContactByName(String name) {
-        return findd.where().eq("contact_name",name).findUnique();
+    public Contact findContactByNameandUserID(String name,Long userId) {
+        return findd.where().eq("contact_name",name).eq("user_user_id",userId).findUnique();
     }
 
     @Override
