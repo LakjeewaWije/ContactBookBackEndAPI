@@ -122,4 +122,18 @@ public class UserController extends Controller{
             return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
         }
     }
+    /**
+     * Getting the Json which comes from the front end and assiging it to a LoginCredential object and passing it to the Service
+     * @return Doing all the validations and returning a json with the specific status code
+     */
+    @With(UserAuthentication.class)
+    public Result deleteUser(){
+        User loggedInUser = (User) ctx().args.get("user");
+        if (loggedInUser != null) {
+            User deletedUser = userService.deleteUser(loggedInUser);
+            return ok(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Successfully Logged Out", deletedUser)));
+        }else {
+            return badRequest(JsonServiceUtil.toJsonNode(new ResponseWrapper<>("Invalid User", null)));
+        }
+    }
 }

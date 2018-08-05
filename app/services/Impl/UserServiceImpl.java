@@ -1,7 +1,9 @@
 package services.Impl;
 
+import dao.ContactDao;
 import dao.UserDao;
 import dto.LoginCredentials;
+import models.Contact;
 import models.User;
 import org.apache.commons.codec.binary.Base64;
 import services.UserService;
@@ -18,7 +20,7 @@ public class UserServiceImpl implements UserService {
     @Inject
     @Named("userDao")
     private UserDao userDao;
-
+    private ContactDao contactDao;
     @Override
     public User addUser(User userToAdd) {
         return userDao.addUser(userToAdd);
@@ -45,5 +47,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUserByEmail(String email) {
         return userDao.findUserByEmail(email);
+    }
+
+    @Override
+    public User deleteUser(User userToDelete) {
+        return userDao.deleteUser(userToDelete);
     }
 }

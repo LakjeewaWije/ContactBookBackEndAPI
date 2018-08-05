@@ -11,4 +11,5 @@ public interface UserService {
     User login(LoginCredentials logincredentials);
     User logout(User userToLogout);
     User findUserByEmail(String email);
+    User deleteUser(User userToDelete);
 }

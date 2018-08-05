@@ -10,6 +10,7 @@ import models.User;
  */
 public class UserDoaImpl implements UserDao{
     public static final Model.Finder<Long, User> find = new Model.Finder<>(User.class);
+    public static final Model.Finder<Long, Contact> findd = new Model.Finder<>(Contact.class);
     @Override
     public User addUser(User toAddUser) {
         toAddUser.save();
@@ -38,6 +39,13 @@ public class UserDoaImpl implements UserDao{
     public User findUserByToken(String token) {
         return find.where().eq("authToken",token).findUnique();
     }
+
+    @Override
+    public User deleteUser(User user) {
+        user.delete();
+        return user;
+    }
+
 
 
 }
